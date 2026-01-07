@@ -31,7 +31,7 @@ public class CounterPage extends HtmlComponent {
         return """
             <div style="text-align: center; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
                 <h1>Hola, JReactive ⚡</h1>
-                <p>Has hecho clic <strong>{{count}}</strong> veces <bold> {{nombrePersona}} </bold></p>
+                <p>Has hecho clic <b>{{count}}</b> veces <b> {{nombrePersona}} </b></p>
                 <input type="text" name="nombrePersona" />
                 
                 <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
