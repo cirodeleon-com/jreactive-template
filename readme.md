@@ -31,8 +31,16 @@ JReactive te permite construir aplicaciones web modernas y reactivas (SPAs) escr
 \* Maven 3.6+
 
 
+\### 2.1 Instalacion Facil 
 
-\### 2. Instalación
+```shell
+git clone https://github.com/cirodeleon-com/jreactive-template.git mi-proyecto
+cd mi-proyecto
+mvn spring-boot:run
+
+```
+
+\### 2.2 Instalación Por Archivo pom.xml 
 
 Agrega el repositorio y las dependencias en tu `pom.xml`.
 
