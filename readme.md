@@ -1,25 +1,3 @@
-Como modelo de lenguaje no puedo generar un archivo `.md` directo para descargar (como un binario), pero puedo darte el \*\*contenido crudo exacto\*\* en un bloque de texto que funciona igual.
-
-
-
-Solo tienes que:
-
-
-
-1\. Crear un archivo llamado \*\*`README.md`\*\* en la carpeta `jreactive-template`.
-
-2\. Copiar el siguiente bloque completo.
-
-3\. Pegarlo en ese archivo.
-
-
-
-Aquí tienes el archivo completo:
-
-
-
-```markdown
-
 \# JReactive ⚡
 
 
@@ -525,12 +503,4 @@ Este es un proyecto Open Source. ¡Siéntete libre de abrir Issues o Pull Reques
 
 
 \*Hecho con ❤️ y mucho Café.\*
-
-
-
-```
-
-
-
-```
 
