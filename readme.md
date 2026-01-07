@@ -42,13 +42,13 @@ Agrega el repositorio y las dependencias en tu `pom.xml`.
 
 <repositories>
 
-&nbsp;   <repository>
+   <repository>
 
-&nbsp;       <id>jitpack.io</id>
+       <id>jitpack.io</id>
 
-&nbsp;       <url>\[https://jitpack.io](https://jitpack.io)</url>
+       <url>\[https://jitpack.io](https://jitpack.io)</url>
 
-&nbsp;   </repository>
+   </repository>
 
 </repositories>
 
@@ -56,27 +56,27 @@ Agrega el repositorio y las dependencias en tu `pom.xml`.
 
 <dependencies>
 
-&nbsp;   <dependency>
+   <dependency>
 
-&nbsp;       <groupId>com.github.cirodeleon-com.jreactive-parent</groupId>
+       <groupId>com.github.cirodeleon-com.jreactive-parent</groupId>
 
-&nbsp;       <artifactId>jreactive-starter-spring</artifactId>
+       <artifactId>jreactive-starter-spring</artifactId>
 
-&nbsp;       <version>v0.1.0</version>
+       <version>v0.1.0</version>
 
-&nbsp;   </dependency>
+   </dependency>
 
-&nbsp;   <dependency>
+   <dependency>
 
-&nbsp;       <groupId>com.github.cirodeleon-com.jreactive-parent</groupId>
+       <groupId>com.github.cirodeleon-com.jreactive-parent</groupId>
 
-&nbsp;       <artifactId>jreactive-apt</artifactId>
+       <artifactId>jreactive-apt</artifactId>
 
-&nbsp;       <version>v0.1.0</version>
+       <version>v0.1.0</version>
 
-&nbsp;       <scope>provided</scope>
+       <scope>provided</scope>
 
-&nbsp;   </dependency>
+   </dependency>
 
 </dependencies>
 
@@ -104,55 +104,55 @@ public class CounterPage extends HtmlComponent {
 
 
 
-&nbsp;   // 1. Estado Reactivo (Sugar Syntax)
+   // 1. Estado Reactivo (Sugar Syntax)
 
-&nbsp;   // Cualquier cambio aquí actualiza la UI automáticamente.
+   // Cualquier cambio aquí actualiza la UI automáticamente.
 
-&nbsp;   @State public int count = 0;
+   @State public int count = 0;
 
-&nbsp;   @State public String nombre = "Mundo";
-
-
-
-&nbsp;   // 2. Lógica del Servidor (RPC)
-
-&nbsp;   @Call
-
-&nbsp;   public void increment() {
-
-&nbsp;       count++;
-
-&nbsp;   }
+   @State public String nombre = "Mundo";
 
 
 
-&nbsp;   // 3. La Vista (HTML)
+   // 2. Lógica del Servidor (RPC)
 
-&nbsp;   @Override
+   @Call
 
-&nbsp;   protected String template() {
+   public void increment() {
 
-&nbsp;       return """
+       count++;
 
-&nbsp;           <div class="card">
+   }
 
-&nbsp;               <h1>Hola, {{nombre}}</h1>
 
-&nbsp;               <p>Contador: <strong>{{count}}</strong></p>
 
-&nbsp;               
+   // 3. La Vista (HTML)
 
-&nbsp;               <input type="text" name="nombre" placeholder="Escribe tu nombre">
+   @Override
 
-&nbsp;               
+   protected String template() {
 
-&nbsp;               <button @click="increment()">Sumar +1</button>
+       return """
 
-&nbsp;           </div>
+           <div class="card">
 
-&nbsp;       """;
+               <h1>Hola, {{nombre}}</h1>
 
-&nbsp;   }
+               <p>Contador: <strong>{{count}}</strong></p>
+
+               
+
+               <input type="text" name="nombre" placeholder="Escribe tu nombre">
+
+               
+
+               <button @click="increment()">Sumar +1</button>
+
+           </div>
+
+       """;
+
+   }
 
 }
 
@@ -208,9 +208,9 @@ JReactive incluye un router integrado. Navega entre páginas sin recargar el nav
 
 public class UserPage extends HtmlComponent {
 
-&nbsp;   @Param("id") 
+   @Param("id") 
 
-&nbsp;   @State public String userId;
+   @State public String userId;
 
 }
 
@@ -276,7 +276,7 @@ El framework optimiza las colecciones. Si agregas un ítem a una lista, solo se 
 
 public void agregar(String nuevaTarea) {
 
-&nbsp;   tareas.add(nuevaTarea); // ¡Solo viaja el delta!
+   tareas.add(nuevaTarea); // ¡Solo viaja el delta!
 
 }
 
@@ -290,11 +290,11 @@ public void agregar(String nuevaTarea) {
 
 <ul>
 
-&nbsp;   {{#each tareas as tarea}}
+   {{#each tareas as tarea}}
 
-&nbsp;       <li>{{tarea}}</li>
+       <li>{{tarea}}</li>
 
-&nbsp;   {{/each}}
+   {{/each}}
 
 </ul>
 
@@ -318,9 +318,9 @@ Puedes incrustar componentes dentro de otros (como un Reloj, un Footer, o una Ta
 
 <div class="dashboard">
 
-&nbsp;   <ClockLeaf />
+   <ClockLeaf />
 
-&nbsp;   <UserCard ref="userProfile" />
+   <UserCard ref="userProfile" />
 
 </div>
 
@@ -344,9 +344,9 @@ Maneja subida de archivos fácilmente. Los recibes como objetos `JrxFile` (Base6
 
 public void subir(JrxFile archivo) {
 
-&nbsp;   System.out.println("Recibido: " + archivo.name() + " (" + archivo.size() + " bytes)");
+   System.out.println("Recibido: " + archivo.name() + " (" + archivo.size() + " bytes)");
 
-&nbsp;   // archivo.base64() contiene los datos binarios codificados
+   // archivo.base64() contiene los datos binarios codificados
 
 }
 
@@ -378,7 +378,7 @@ Comparte datos entre sesiones o componentes usando un Store global estático y r
 
 public static class AppStore {
 
-&nbsp;   public String theme = "light";
+   public String theme = "light";
 
 }
 
@@ -389,12 +389,11 @@ public static class AppStore {
 
 
 @Call
-
 public void toggleTheme() {
 
-&nbsp;   store.theme = "dark";
+   store.theme = "dark";
 
-&nbsp;   updateState("store"); // Notifica a todos los componentes suscritos
+   updateState("store"); // Notifica a todos los componentes suscritos
 
 }
 
@@ -416,9 +415,9 @@ Soporte nativo para `jakarta.validation`. Si la validación falla en el servidor
 
 public class Form {
 
-&nbsp;   @NotBlank(message = "Nombre requerido")
+   @NotBlank(message = "Nombre requerido")
 
-&nbsp;   public String nombre;
+   public String nombre;
 
 }
 
@@ -428,11 +427,11 @@ public class Form {
 
 public void guardar(@Valid Form form) {
 
-&nbsp;   // Solo entra aquí si es válido.
+   // Solo entra aquí si es válido.
 
-&nbsp;   // Si no, JReactive muestra los errores en la UI automáticamente.
+   // Si no, JReactive muestra los errores en la UI automáticamente.
 
-&nbsp;   repo.save(form);
+   repo.save(form);
 
 }
 
@@ -460,11 +459,11 @@ Si tu aplicación está en un paquete diferente al del framework (ej. `com.miemp
 
 public class Application {
 
-&nbsp;   public static void main(String\[] args) {
+   public static void main(String\[] args) {
 
-&nbsp;       SpringApplication.run(Application.class, args);
+       SpringApplication.run(Application.class, args);
 
-&nbsp;   }
+   }
 
 }
 
