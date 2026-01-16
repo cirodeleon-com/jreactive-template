@@ -1,0 +1,95 @@
+################################################################################
+# Maven / Java build
+################################################################################
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+
+# Maven wrapper (si lo llegas a usar)
+.mvn/wrapper/maven-wrapper.jar
+
+################################################################################
+# Spring Boot
+################################################################################
+# Logs
+*.log
+logs/
+log/
+
+# Runtime / temp
+tmp/
+temp/
+
+################################################################################
+# IDEs (Eclipse / IntelliJ / VSCode)
+################################################################################
+# Eclipse
+.classpath
+.project
+.settings/
+.recommenders/
+.factorypath
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# VSCode
+.vscode/
+
+################################################################################
+# OS files
+################################################################################
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+
+################################################################################
+# Git
+################################################################################
+# Nunca subas el repo interno
+.git/
+
+################################################################################
+# Test / tool outputs
+################################################################################
+# Surefire / failsafe reports (se generan)
+target/surefire-reports/
+target/failsafe-reports/
+*.dump
+*.dumpstream
+
+################################################################################
+# Secrets / local config (si los llegas a tener)
+################################################################################
+.env
+.env.*
+application-local.yml
+application-local.yaml
+application-local.properties
+
+################################################################################
+# Keep (opcional) - ejemplos de archivos que sí quieres versionar
+################################################################################
+!.gitignore
+!.codecontextualizerignore
+

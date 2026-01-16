@@ -18,7 +18,8 @@
 
     <properties>
         <java.version>17</java.version>
-        <jreactive.version>v0.1.0</jreactive.version>
+        <jreactive.version>v0.8.0</jreactive.version>
+        <archunit.version>1.3.0</archunit.version>
     </properties>
 
     <repositories>
@@ -53,6 +54,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        
+        <dependency>
+			<groupId>com.tngtech.archunit</groupId>
+			<artifactId>archunit-junit5</artifactId>
+            <version>${archunit.version}</version>
+			<scope>test</scope>
+		</dependency>
         
         <dependency>
             <groupId>org.springframework.boot</groupId>

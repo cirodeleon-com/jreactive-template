@@ -1,0 +1,40 @@
+package com.example.demo.tutorial;
+
+import org.springframework.stereotype.Component;
+
+import com.ciro.jreactive.HtmlComponent;
+import com.ciro.jreactive.State;
+import com.ciro.jreactive.annotations.Call;
+import com.ciro.jreactive.router.Route;
+
+@Component
+@Route(path = "/tutorial/leccion02")
+public class Leccion02Page extends HtmlComponent{
+   //definimos la variable reactiva	
+   @State String saludoState="";
+   
+   // usamos la anotacion call para poder llamar a este metodo
+   @Call
+   public void saludar(String saludo) {
+	 saludoState = "jreactive te dice hello world "+ saludo;  
+   }
+   
+   @Override
+   protected String template() {
+       return """
+           <p>aqui viene el texto que escribes : 
+              <!-- mostramos la variable reactiva -->
+              <strong>{{saludoState}}</strong> 
+           </p>
+           
+           <!--  llamamos a nuestra variable reactiva usando el name del input -->
+           <input type="text" name="saludoState" />
+           
+           
+           <!-- usamos el evento @click para llamar al metodo y
+            pasamos como parametro el valor de nuestra variable reactiva -->
+            
+           <button type="button" @click="saludar(saludoState)">saludar</button>
+       """;
+   }
+}

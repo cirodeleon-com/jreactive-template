@@ -1,0 +1,30 @@
+# CodeContextualizer Ignore File
+# Agrega carpetas o archivos que deseas ignorar
+
+# Build systems
+target/
+out/
+build/
+dist/
+
+# IDE
+.idea/
+.vscode/
+
+# Node
+node_modules/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Compilados
+*.class
+*.exe
+*.dll
+*.o
+*.so
+
+# Logs y temporales
+*.log
+*.tmp
