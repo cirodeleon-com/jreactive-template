@@ -2,13 +2,13 @@ package com.example.demo.pages;
 
 import com.ciro.jreactive.State;
 import com.ciro.jreactive.annotations.Call;
-import com.ciro.jreactive.annotations.Client;       // 🔥 LA CLAVE
-import com.ciro.jreactive.annotations.StatefulRam;  // 🔥 LA CLAVE
+import com.ciro.jreactive.annotations.Client;
+import com.ciro.jreactive.annotations.StatefulRam;
 import com.ciro.jreactive.router.Route;
 import com.example.demo.AppPage;
 
 @Route(path = "/")
-@Client
+@Client // 🔥 INDISPENSABLE: Activa el morphing y los hooks del cliente
 @StatefulRam
 public class HomePage extends AppPage {
 
@@ -27,7 +27,7 @@ public class HomePage extends AppPage {
 
     @Call
     public void sync() {
-        // Dispara reactividad
+        // Dispara la reactividad al teclear
     }
 
     @Override
@@ -72,7 +72,12 @@ public class HomePage extends AppPage {
                         
                         <div class="card-footer">
                             <div class="progress-bar">
-                                <div id="power-bar-fill" class="progress-fill" style="width: {{powerLevel}}%;"></div>
+                                <div id="power-bar-fill" 
+                                     class="progress-fill" 
+                                     style="width: {{powerLevel}}%;"
+                                     data-level="{{powerLevel}}"
+                                     client:update="window.ConfettiDemo.check(this)">
+                                </div>
                             </div>
                         </div>
                     </div>
