@@ -1,8 +1,6 @@
-package com.example.demo.tutorial;
+package com.example.demo.tutorial.t01;
 
-import org.springframework.stereotype.Component;
 
-import com.ciro.jreactive.HtmlComponent;
 import com.ciro.jreactive.State;
 import com.ciro.jreactive.router.Route;
 import com.example.demo.AppPage;

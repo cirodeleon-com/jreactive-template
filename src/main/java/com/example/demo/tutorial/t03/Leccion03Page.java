@@ -1,4 +1,4 @@
-package com.example.demo.tutorial;
+package com.example.demo.tutorial.t03;
 
 import com.ciro.jreactive.State;
 import java.io.Serializable;

@@ -1,0 +1,228 @@
+/* ==========================================================================
+   Contenedor Principal (Forzando Lado a Lado)
+   ========================================================================== */
+.home-container {
+    display: flex;
+    flex-direction: row; 
+    flex-wrap: nowrap; /* 🔥 PROHIBIDO SALTAR DE LÍNEA EN PC 🔥 */
+    gap: 30px;         /* Reducimos el hueco para que quepan mejor */
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+    width: 100%;
+    max-width: 950px;   
+    margin: 40px auto; 
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* Solo se apilan si la pantalla es de teléfono (< 768px) */
+@media (max-width: 768px) {
+    .home-container {
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+}
+
+/* ==========================================================================
+   Panel Izquierdo (Formulario Blanco)
+   ========================================================================== */
+.controls-panel {
+    flex: 1 1 300px; /* Permite que se encoja para dejarle espacio a la tarjeta */
+    width: 100%;
+    max-width: 450px;
+    box-sizing: border-box; 
+    background: white;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.title {
+    font-size: 2.5rem; /* Un pelín más pequeño para que quepa bien */
+    font-weight: 900;
+    margin: 0;
+    color: #11998e; 
+    background: linear-gradient(90deg, #11998e, #38ef7d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 25px;
+    margin-top: 5px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #eaeaea;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    box-sizing: border-box;
+    background: #fdfdfd;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #11998e;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(17, 153, 142, 0.1);
+}
+
+.btn-boost {
+    width: 100%;
+    padding: 15px;
+    margin-top: 15px;
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.1s, background 0.3s, box-shadow 0.3s;
+}
+
+.btn-boost:hover {
+    background: #222;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.btn-boost:active {
+    transform: translateY(1px);
+}
+
+.hint {
+    font-size: 0.85rem;
+    color: #888;
+    margin-top: 20px;
+    text-align: center;
+    line-height: 1.4;
+}
+
+/* ==========================================================================
+   Tarjeta Derecha (Holográfica Oscura)
+   ========================================================================== */
+.card-showcase {
+    flex: 0 0 320px; /* Tamaño 100% estricto */
+    perspective: 1000px;
+}
+
+.dev-card {
+    width: 100%;
+    min-height: 420px; 
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border-radius: 20px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px; 
+    position: relative;
+    overflow: hidden;
+    color: white;
+    background-color: #1e1e2f; 
+    transform-style: preserve-3d;
+    transition: transform 0.1s ease-out;
+    box-sizing: border-box;
+}
+
+.card-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(56, 239, 125, 0.15) 0%, transparent 40%);
+    pointer-events: none;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transform: translateZ(30px);
+}
+
+.badge {
+    background: rgba(255,255,255,0.15);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.level {
+    font-weight: 800;
+    color: #38ef7d;
+}
+
+.card-body {
+    transform: translateZ(50px);
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-name {
+    font-size: 1.8rem; 
+    margin: 0;
+    line-height: 1.2;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    word-wrap: break-word; 
+}
+
+.card-role {
+    font-size: 1rem;
+    color: #aeb2cc;
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+.card-footer {
+    transform: translateZ(40px);
+    width: 100%;
+}
+
+/* ==========================================================================
+   Barra de Progreso
+   ========================================================================== */
+.progress-bar {
+    width: 100%;
+    height: 16px; 
+    background: rgba(255, 255, 255, 0.15); 
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.progress-fill {
+    height: 100%;
+    /* El ancho viene directamente inyectado desde Java mediante la variable barStyle */
+    background: linear-gradient(90deg, #11998e, #38ef7d);
+    transition: width 0.4s ease-out; 
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(56, 239, 125, 0.6);
+}
