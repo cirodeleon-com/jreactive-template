@@ -4,11 +4,13 @@ import com.ciro.jreactive.HtmlComponent;
 import com.ciro.jreactive.State;
 import com.ciro.jreactive.annotations.Call;
 import com.ciro.jreactive.router.Route;
+import com.example.demo.AppPage;
+
 import org.springframework.stereotype.Component;
 
-@Component
+
 @Route(path = "/")
-public class CounterPage extends HtmlComponent {
+public class CounterPage extends AppPage {
 
     @State
     public int count = 0;

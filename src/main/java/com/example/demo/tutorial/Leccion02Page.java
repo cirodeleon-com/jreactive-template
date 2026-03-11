@@ -1,15 +1,15 @@
 package com.example.demo.tutorial;
 
-import org.springframework.stereotype.Component;
+
 
 import com.ciro.jreactive.HtmlComponent;
 import com.ciro.jreactive.State;
 import com.ciro.jreactive.annotations.Call;
 import com.ciro.jreactive.router.Route;
+import com.example.demo.AppPage;
 
-@Component
 @Route(path = "/tutorial/leccion02")
-public class Leccion02Page extends HtmlComponent{
+public class Leccion02Page extends AppPage{
    //definimos la variable reactiva	
    @State String saludoState="";
    

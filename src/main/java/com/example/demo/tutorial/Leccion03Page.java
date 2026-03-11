@@ -1,21 +1,17 @@
 package com.example.demo.tutorial;
 
 import com.ciro.jreactive.State;
-
 import java.io.Serializable;
-
-import org.springframework.stereotype.Component;
-import com.ciro.jreactive.HtmlComponent;
 import com.ciro.jreactive.annotations.Call;
 import com.ciro.jreactive.router.Route;
+import com.example.demo.AppPage;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-@Component
 @Route(path = "/tutorial/leccion03")
-public class Leccion03Page extends HtmlComponent{
+public class Leccion03Page extends AppPage{
 	
 	public static class SignupDto implements Serializable{
 

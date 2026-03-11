@@ -2,71 +2,65 @@ package com.example.demo;
 
 import com.ciro.jreactive.CallGuard;
 import com.ciro.jreactive.JrxHttpApi;
+import com.ciro.jreactive.JrxHubManager;
+import com.ciro.jreactive.JrxRequestQueue;
 import com.ciro.jreactive.PageResolver;
+import com.ciro.jreactive.WsConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 public class PageController {
 
-    private final PageResolver pageResolver;
+    private final PageResolver pageResolver; // (puede quedarse)
     private final JrxHttpApi api;
+    private final JrxRequestQueue queue;
 
-    // Inyección de dependencias (estos Beans vienen de tu librería jreactive-starter-spring)
     public PageController(PageResolver pageResolver,
                           ObjectMapper objectMapper,
-                          CallGuard guard) {
+                          CallGuard guard,
+                          WsConfig wsConfig,
+                          JrxRequestQueue queue,JrxHubManager hubManager) {
         this.pageResolver = pageResolver;
-        // Instanciamos el API helper usando las piezas que nos da el Framework
-        this.api = new JrxHttpApi(pageResolver, objectMapper, guard);
+        this.api = new JrxHttpApi(pageResolver, objectMapper, guard, wsConfig.isPersistentState(),hubManager);
+        this.queue = queue;
     }
 
-    // 1. Manejo de Rutas (SPA Routing)
-    // Captura cualquier ruta que no sea un archivo estático (js, css, ws)
     @GetMapping(value = {
             "/",
-            "/{x:^(?!js|ws|static).*$}",
-            "/{x:^(?!js|ws|static).*$}/**"
+            "/{x:^(?!js|ws|css|static|jrx).*$}",
+            "/{x:^(?!js|ws|css|static|jrx).*$}/**"
     }, produces = MediaType.TEXT_HTML_VALUE)
-    public String page(HttpServletRequest req,
-                       @RequestHeader(value = "X-Partial", required = false) String partial) {
-        
+    public ResponseEntity<String> page(HttpServletRequest req,
+                                       @RequestHeader(value = "X-Partial", required = false) String partial) {
+
         String path = req.getRequestURI();
         String sessionId = req.getSession(true).getId();
 
-        // Renderizamos el componente correspondiente a la ruta
-        String contentHtml = api.render(sessionId, path);
+        // SPA: X-Partial == "1" => renderLayout=false
+        boolean renderLayout = !"1".equals(partial);
+        
+        Map<String, String> queryParams = new HashMap<>();
+        req.getParameterMap().forEach((k, v) -> {
+            if (v != null && v.length > 0) queryParams.put(k, v[0]);
+        });
 
-        // Si es una navegación interna (AJAX), devolvemos solo el HTML del componente
-        if (partial != null) return contentHtml;
+        // ✅ serializamos también render por si hay rutas que disparan timers/state a la par de eventos
+        String html = queue.run(sessionId, path, () -> api.render(sessionId, path, renderLayout, queryParams));
 
-        // Si es la primera carga, devolvemos el HTML completo (El Shell)
-        return """
-            <!DOCTYPE html>
-            <html lang="es">
-              <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>JReactive App</title>
-                
-                <script src="/js/jreactive-runtime.js"></script>
-                
-                <style>
-                    body { margin: 0; font-family: system-ui, -apple-system, sans-serif; background: #f4f4f9; }
-                </style>
-              </head>
-              <body>
-                <div id="app">%s</div>
-              </body>
-            </html>
-            """.formatted(contentHtml);
+        return ResponseEntity.ok()
+                .header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
+                .header("Pragma", "no-cache")
+                .header("Expires", "0")
+                .body(html);
     }
 
-    // 2. Manejo de llamadas RPC (@Call)
     @PostMapping(
             value = "/call/{qualified:.+}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -76,19 +70,40 @@ public class PageController {
                              @RequestBody Map<String, Object> body,
                              HttpServletRequest req) {
 
-        String path = req.getHeader("Referer");
-        // Limpieza básica del path (quitar dominio)
-        if (path != null) {
-            path = path.replaceFirst("https?://[^/]+", "");
-            int q = path.indexOf('?');
-            if (q != -1) path = path.substring(0, q);
-        } else {
-            path = "/";
-        }
+        System.out.println("➡️ JRX CALL qualified=" + qualified + " body=" + body);
 
         String sessionId = req.getSession(true).getId();
+        String path = extractPath(req); // ✅ helper robusto
         
-        // Delegamos la ejecución al motor del Framework
-        return api.call(sessionId, path, qualified, body);
+        Map<String, String> queryParams = new HashMap<>();
+        req.getParameterMap().forEach((k, v) -> {
+            if (v != null && v.length > 0) queryParams.put(k, v[0]);
+        });
+
+        // ✅ Cola por (sessionId+path): orden garantizado entre set/call/call
+        return queue.run(sessionId, path, () -> api.call(sessionId, path, qualified, body, queryParams));
+    }
+
+    private String extractPath(HttpServletRequest req) {
+        // ✅ Preferido: si el JS algún día manda header X-Path (no rompe nada)
+        String xPath = req.getHeader("X-Path");
+        if (xPath != null && !xPath.isBlank()) return strip(xPath);
+
+        // Fallback: Referer
+        String ref = req.getHeader("Referer");
+        String path = (ref == null) ? "/" : ref.replaceFirst("https?://[^/]+", "");
+        return strip(path);
+    }
+
+    private String strip(String path) {
+        if (path == null || path.isBlank()) return "/";
+
+        int q = path.indexOf('?');
+        if (q != -1) path = path.substring(0, q);
+
+        int hash = path.indexOf('#');
+        if (hash != -1) path = path.substring(0, hash);
+
+        return path.isBlank() ? "/" : path;
     }
 }

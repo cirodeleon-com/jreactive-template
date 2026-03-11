@@ -5,10 +5,11 @@ import org.springframework.stereotype.Component;
 import com.ciro.jreactive.HtmlComponent;
 import com.ciro.jreactive.State;
 import com.ciro.jreactive.router.Route;
+import com.example.demo.AppPage;
 
-@Component
+
 @Route(path = "/tutorial/leccion01")
-public class Leccion01Page extends HtmlComponent{
+public class Leccion01Page extends AppPage{
    //definimos la variable reactiva	
    @State String saludoState="";
    

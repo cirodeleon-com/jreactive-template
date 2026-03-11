@@ -8,10 +8,6 @@
 
 
 
-\[!\[](https://jitpack.io/v/cirodeleon-com/jreactive-parent.svg)](https://jitpack.io/#cirodeleon-com/jreactive-parent)
-
-
-
 JReactive te permite construir aplicaciones web modernas y reactivas (SPAs) escribiendo \*\*solamente código Java\*\*. Olvídate de REST APIs, serialización JSON manual o frameworks de frontend complejos. El estado vive en el servidor y la interfaz se sincroniza automáticamente vía WebSockets mediante \*\*Deltas Inteligentes\*\*.
 
 
@@ -34,8 +30,8 @@ JReactive te permite construir aplicaciones web modernas y reactivas (SPAs) escr
 \### 2. Instalacion 
 
 ```shell
-git clone https://github.com/cirodeleon-com/jreactive-template.git mi-proyecto
-cd mi-proyecto
+git clone https://github.com/cirodeleon-com/jreactive-template.git nombre-de-tu-proyecto
+cd nombre-de-tu-proyecto
 mvn spring-boot:run
 
 ```
