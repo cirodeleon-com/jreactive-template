@@ -18,7 +18,7 @@ Olvídate de REST APIs, de serialización manual y de los pesados ecosistemas de
 Asegúrate de tener Java 21+ y Maven instalados.
 
 ```shell
-git clone [https://github.com/cirodeleon-com/jreactive-template.git](https://github.com/cirodeleon-com/jreactive-template.git) mi-proyecto-reactivo
+git clone https://github.com/cirodeleon-com/jreactive-template.git mi-proyecto-reactivo
 cd mi-proyecto-reactivo
 mvn spring-boot:run
 ```
