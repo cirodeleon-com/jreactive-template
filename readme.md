@@ -4,74 +4,64 @@
   
   [![Java 21+](https://img.shields.io/badge/Java-21%2B-blue.svg)](https://www.oracle.com/java/)
   [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2+-brightgreen.svg)](https://spring.io/projects/spring-boot)
-  [![JReactive](https://img.shields.io/badge/JReactive-v0.9.7-orange.svg)](https://github.com/cirodeleon-com/jreactive-parent)
+  [![JReactive](https://img.shields.io/badge/JReactive-v1.0.0-orange.svg)](https://github.com/cirodeleon-com/jreactive-parent)
 </div>
 
 ---
 
 Bienvenido a la plantilla oficial de **JReactive**. Este proyecto está preconfigurado con todo lo necesario para que empieces a construir aplicaciones web modernas, reactivas (SPAs) y en tiempo real escribiendo **solamente código Java**. 
 
-Olvídate de REST APIs, de serialización manual y de los pesados ecosistemas de JavaScript. El estado vive en el servidor y la interfaz se sincroniza de forma transparente.
+Olvídate de REST APIs, de serialización manual y de los pesados ecosistemas de JavaScript. El estado vive en el servidor y la interfaz se sincroniza de forma transparente mediante deltas JSON ultraligeros.
 
 ## 🚀 Inicio Rápido
 
-### 1. Clonar y Ejecutar
 Asegúrate de tener Java 21+ y Maven instalados.
 
 ```shell
-git clone https://github.com/cirodeleon-com/jreactive-template.git mi-proyecto-reactivo
+git clone [https://github.com/cirodeleon-com/jreactive-template.git](https://github.com/cirodeleon-com/jreactive-template.git) mi-proyecto-reactivo
 cd mi-proyecto-reactivo
 mvn spring-boot:run
 ```
 
-Abre tu navegador en [http://localhost:8080](http://localhost:8080) y verás la aplicación de demostración corriendo instantáneamente.
+Abre tu navegador en [http://localhost:8080](http://localhost:8080) y verás el *Dashboard* interactivo y el tutorial corriendo instantáneamente.
 
 ---
 
-## 📂 Estructura del Proyecto
+## 🎓 Tutorial de Inicio Rápido (9 Lecciones)
 
-Esta plantilla incluye un par de ejemplos para que veas la magia en acción. Siéntete libre de borrarlos cuando estés listo para escribir tu propio código.
+Esta plantilla incluye un curso intensivo inmersivo. Navega por las siguientes rutas en tu entorno local para entender el **100% de la arquitectura base en menos de 15 minutos**:
 
-```text
-src/main/java/com/example/demo/
- ├── pages/
- │    └── CounterPage.java       <-- Demo de interactividad básica y manejo de estado.
- ├── tutorial/
- │    ├── t01/Leccion01Page.java <-- Data Binding unidireccional.
- │    ├── t02/Leccion02Page.java <-- Eventos (@Call) y mutación.
- │    ├── t03/Leccion03Page.java <-- Formularios y validación nativa JSR-380 (@Valid).
- │    ├── t04/Leccion04Page.java <-- Smart Lists y emisión de Deltas (WebSocket).
- │    ├── t05/Leccion05Page.java <-- Optimistic UI (0ms de lag percibido).
- │    ├── t06/Leccion06Page.java <-- Escalabilidad infinita con @Stateless.
- │    └── t07/Leccion07Page.java <-- Co-localización de CSS y JS (Scoped).
- ├── AppPage.java                <-- Clase base que asigna el Layout global.
- ├── DemoApplication.java        <-- Entrypoint de Spring Boot.
- ├── MainLayout.java             <-- El "cascarón" HTML (Navbar, Footer) de tu SPA.
- └── PageController.java         <-- Controlador transparente para gestionar enrutamiento HTTP.
-```
+1. **`/tutorial/leccion01` - Estado y Binding:** Aprende a conectar variables de Java (`@State`) directamente al DOM en tiempo real.
+2. **`/tutorial/leccion02` - Eventos (`@Call`):** Ejecuta métodos de backend desde botones en el frontend sin escribir llamadas AJAX.
+3. **`/tutorial/leccion03` - Validación (JSR-380):** Usa anotaciones clásicas (`@NotBlank`, `@Email`) y deja que el framework inyecte los errores en la UI.
+4. **`/tutorial/leccion04` - Smart Lists:** Maneja colecciones complejas. Si agregas un ítem, JReactive envía solo ese delta por la red, sin repintar toda la tabla.
+5. **`/tutorial/leccion05` - Optimistic UI:** Haz que tus botones reaccionen en 0ms en el cliente mientras la petición viaja al servidor en segundo plano.
+6. **`/tutorial/leccion06` - Arquitectura `@Stateless`:** Serializa y firma el estado para que viaje en la web. 0 bytes de RAM en el servidor entre peticiones.
+7. **`/tutorial/leccion07` - Co-localización:** Escribe CSS y JS con el mismo nombre de tu clase Java y el framework los inyectará y aislará por ti.
+8. **`/tutorial/leccion08` - Rutas y URL Params:** Lee parámetros del Path y Query Strings (`@UrlVariable`, `@UrlParam`) y sincroniza la URL al teclear.
+9. **`/tutorial/leccion09` - Composición (Props y Slots):** Crea tu propio Design System con componentes reutilizables, inyectando datos de padres a hijos.
 
 ---
 
 ## 🪄 ¿Cómo funciona JReactive? (En 30 segundos)
 
-Olvida las configuraciones complejas. Crea una clase anotada con `@Route`, define tus variables con `@State` y expón tus acciones con `@Call`. 
+Crea una clase anotada con `@Route`, define tus variables con `@State` y expón tus acciones con `@Call`. 
 
 ```java
 @Route(path = "/")
 public class CounterPage extends AppPage {
 
-   // 1. Estado Reactivo (Sugar Syntax)
-   // Cualquier cambio aquí actualiza la UI automáticamente.
+   // 1. Estado Reactivo (Lectura/Escritura en O(1) gracias al AOT)
    @State public int count = 0;
    @State public String nombre = "Mundo";
 
    // 2. Lógica del Servidor (RPC)
    @Call
    public void increment() {
-       count++; // JReactive calcula el Delta y actualiza el DOM
+       count++; // JReactive calcula el Delta y actualiza el DOM sin parpadeos
    }
 
-   // 3. La Vista (HTML)
+   // 3. La Vista (HTML puro, sin JSX)
    @Override
    protected String template() {
        return """
@@ -80,7 +70,6 @@ public class CounterPage extends AppPage {
                <p>Contador: <strong>{{count}}</strong></p>
                
                <input type="text" name="nombre" placeholder="Escribe tu nombre">
-               
                <button @click="increment()">Sumar +1</button>
            </div>
        """;
@@ -90,37 +79,12 @@ public class CounterPage extends AppPage {
 
 ---
 
-## 📖 Guía de Funcionalidades Clave
-
-### 1. Gestión del Estado (`@State`)
-Anota tus campos con `@State`. El framework detecta los cambios mediante su motor AOT (*Ahead-Of-Time compilation*) y envía solo el delta exacto al frontend en milisegundos. Sin reflexión pesada.
-
-### 2. Enrutamiento SPA (`@Route`)
-JReactive incluye un router integrado. Navega entre páginas sin recargar el navegador usando el atributo `data-router`.
-```html
-<a href="/tutorial/leccion01" data-router>Ir a la lección 1</a>
-```
-
-### 3. Listas Reactivas Inteligentes (Smart Lists)
-El framework optimiza las colecciones. Si agregas un ítem a una `List`, `Set` o `Map`, solo se envía ese ítem por la red; el DOM jamás se repinta por completo.
-
-### 4. Validación Integrada (JSR-380)
-Soporte nativo para `jakarta.validation`. Aplica anotaciones como `@NotBlank` o `@Email` a tus DTOs, pásalos a un método `@Call` con `@Valid`, y JReactive se encarga de mostrar los errores debajo del input correspondiente en la vista.
-
-### 5. Escalabilidad @Stateless
-Anota un componente con `@Stateless` y JReactive serializará, comprimirá (con LZ4) y firmará criptográficamente el estado, enviándolo al cliente en una meta-etiqueta. El componente consumirá **0 bytes de RAM** en el servidor entre peticiones.
-
-### 6. Co-localización (CSS y JS)
-Si creas un archivo `.css` o `.js` con el mismo nombre que tu clase Java (ej. `Boton.java`, `Boton.css`, `Boton.js`), JReactive los inyectará y aislará (scope) automáticamente para ese componente.
-
----
-
 ## ⚡ Rendimiento y Arquitectura
 
-* **SSR + CSR Híbrido:** Primera carga renderizada en el servidor (SEO friendly), interactividad posterior vía WebSockets o HTTP fallback (0ms lag percibido).
-* **Deltas Minimizados:** Solo viajan los datos que cambian (JSON mínimo).
-* **DOM Morphing:** Las actualizaciones en el HTML son quirúrgicas. JReactive jamás robará el foco del usuario mientras escribe, gracias a su motor basado en *Idiomorph*.
-* **100% Extensible:** Al exponer el `PageController` en esta plantilla, mantienes el control absoluto para integrar Spring Security o interceptores tradicionales.
+* **Compilador AOT:** Cero reflexión pesada en tiempo de ejecución. El framework genera código en la fase de compilación de Maven para accesos al estado en *O(1)*.
+* **SSR + CSR Híbrido:** Primera carga renderizada en el servidor (SEO friendly), interactividad posterior vía WebSockets (o HTTP en modo Stateless).
+* **DOM Morphing:** Las actualizaciones en el HTML son quirúrgicas. JReactive jamás robará el foco del usuario mientras escribe (Powered by Idiomorph).
+* **Escudo Anti-Concurrencia:** Integración con Virtual Threads, Caffeine (L1) y Redis (L2) con *Optimistic Locking* para arquitecturas distribuidas.
 
 ---
 
@@ -129,4 +93,4 @@ JReactive nació para devolverle la alegría de programar interfaces a los desar
 
 Si te gusta lo que ves, ¡no olvides darle una ⭐ en el repositorio oficial de JReactive!
 
-*Hecho con ❤️ y mucho Café.*
+*Hecho con ❤️ y pura Verdad Funcional.*

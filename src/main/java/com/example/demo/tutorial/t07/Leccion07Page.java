@@ -10,21 +10,5 @@ public class Leccion07Page extends AppPage {
     @State 
     public String mensaje = "¡Hazme Clic!";
 
-    @Override
-    protected String template() {
-        return """
-            <section class="contenedor">
-                <h1>🎨 Co-localización (CSS y JS)</h1>
-                <p>
-                    El diseño y la interactividad nativa de esta página están separados en 
-                    <code>Leccion07Page.css</code> y <code>Leccion07Page.js</code>. 
-                    ¡JReactive los inyecta y aísla automáticamente!
-                </p>
-                
-                <div class="caja-magica" onclick="animarCajaMagica(this)">
-                    {{mensaje}}
-                </div>
-            </section>
-        """;
-    }
+    
 }

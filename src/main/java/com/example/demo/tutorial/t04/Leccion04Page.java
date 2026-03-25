@@ -52,6 +52,20 @@ public class Leccion04Page extends AppPage {
                     {{/each}}
                 </ul>
             </section>
+            
+            <hr style="margin-top: 40px; border-top: 1px solid #eee;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                    <a data-router href="/tutorial/leccion03" style="color: #666; text-decoration: none; font-weight: 500;">
+                        ⬅️ Anterior: Validación
+                    </a>
+                    <a data-router href="/" style="color: #11998e; text-decoration: none; font-weight: bold;">
+                        🏠 Índice
+                    </a>
+                    <a data-router href="/tutorial/leccion05" style="padding: 10px 20px; background: #111; color: white; text-decoration: none; border-radius: 8px; font-weight: bold;">
+                        Siguiente: Optimistic UI ➡️
+                    </a>
+                </div>
+            
         """;
     }
 }

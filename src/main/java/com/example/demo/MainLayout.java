@@ -65,19 +65,13 @@ public class MainLayout extends HtmlComponent {
             </head>
             <body>
                 <nav>
-                    <ul>
-                        <li><strong style="font-size: 1.3rem; color: var(--primary);">⚡ JReactive</strong></li>
-                    </ul>
-                    <ul>
-                        <li><a href="/" data-router>Inicio</a></li>
-                        <li><a href="/tutorial/leccion01" data-router>1. Binding</a></li>
-                        <li><a href="/tutorial/leccion02" data-router>2. Eventos</a></li>
-                        <li><a href="/tutorial/leccion03" data-router>3. Validación</a></li>
-                        <li><a href="/tutorial/leccion04" data-router>4. Listas</a></li>
-                        <li><a href="/tutorial/leccion05" data-router>5. Opt UI</a></li>
-                        <li><a href="/tutorial/leccion06" data-router>6. Stateless</a></li>
-                        <li><a href="/tutorial/leccion07" data-router>7. Co-localización</a></li>
-                    </ul>
+                   <ul>
+                       <li><strong style="font-size: 1.3rem; color: var(--primary);">⚡ JReactive</strong></li>
+                   </ul>
+                   <ul>
+                       <li><a href="/" data-router>Inicio</a></li>
+                       <li><a href="https://github.com/cirodeleon-com/jreactive-template" target="_blank">GitHub</a></li>
+                   </ul>
                 </nav>
 
                 <main id="app" class="fade-in">
