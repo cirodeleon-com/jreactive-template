@@ -18,21 +18,27 @@ jobs:
       - name: Configurar Java 21
         uses: actions/setup-java@v5
         with:
-          distribution: temurin
           java-version: '21'
+          distribution: 'temurin'
           cache: maven
 
-      - name: Build e instalar dependencias del proyecto
+      - name: Build e instalar proyecto
         run: mvn -B install -DskipTests --no-transfer-progress
 
       - name: Instalar browsers y dependencias de Playwright
-        run: mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps chromium"
+        run: mvn -B exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps chromium" --no-transfer-progress
 
       - name: Ejecutar pruebas
         run: mvn -B test --no-transfer-progress
 
-      - name: Subir reportes si falla
+      - name: Mostrar reportes de tests si falla
         if: failure()
+        run: |
+          echo "===== SUREFIRE REPORTS ====="
+          find target/surefire-reports -type f -maxdepth 1 -print -exec cat {} \; || true
+
+      - name: Subir reportes
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: surefire-reports
