@@ -22,20 +22,20 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build e instalar proyecto
-        run: mvn -B install -DskipTests --no-transfer-progress
+      - name: Compilar proyecto
+        run: mvn -B -DskipTests install --no-transfer-progress
 
-      - name: Instalar browsers y dependencias de Playwright
-        run: mvn -B exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps chromium" --no-transfer-progress
+      - name: Instalar browsers de Playwright
+        run: mvn -B -Dexec.classpathScope=test exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps chromium" --no-transfer-progress
 
       - name: Ejecutar pruebas
         run: mvn -B test --no-transfer-progress
 
-      - name: Mostrar reportes de tests si falla
+      - name: Mostrar reportes si falla
         if: failure()
         run: |
           echo "===== SUREFIRE REPORTS ====="
-          find target/surefire-reports -type f -maxdepth 1 -print -exec cat {} \; || true
+          find target/surefire-reports -type f -print -exec cat {} \; || true
 
       - name: Subir reportes
         if: always()
