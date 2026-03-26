@@ -1,8 +1,5 @@
 package com.example.demo.tutorial.t02;
 
-
-
-import com.ciro.jreactive.HtmlComponent;
 import com.ciro.jreactive.State;
 import com.ciro.jreactive.annotations.Call;
 import com.ciro.jreactive.router.Route;

@@ -21,7 +21,6 @@ import java.util.Map;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.fields;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.methods;
-import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses; // Arregla el error de noClasses()
 import static com.tngtech.archunit.core.domain.JavaClass.Predicates.assignableTo; // Arregla assignableTo
 
 @AnalyzeClasses(packages = "com.example", importOptions = ImportOption.DoNotIncludeTests.class)
