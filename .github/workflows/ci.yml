@@ -21,9 +21,8 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    - name: Descargar navegadores de Playwright
-      # Playwright necesita descargar Chromium para poder hacer las pruebas E2E
-      run: mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"
+   - name: Descargar navegadores de Playwright
+      run: mvn org.codehaus.mojo:exec-maven-plugin:3.1.0:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps" -Dexec.classpathScope=test
 
     - name: Ejecutar Pruebas E2E
       run: mvn test
