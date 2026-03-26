@@ -24,9 +24,8 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Compilar y descargar navegadores de Playwright
-        # Agregamos 'test-compile' al inicio para forzar la descarga de dependencias
-        run: mvn test-compile org.codehaus.mojo:exec-maven-plugin:3.1.0:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps" -Dexec.classpathScope=test
+      - name: Instalar navegadores de Playwright
+        uses: microsoft/playwright-github-action@v1
 
       - name: Ejecutar Pruebas E2E
         run: mvn test
