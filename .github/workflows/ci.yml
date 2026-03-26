@@ -2,27 +2,30 @@ name: JReactive E2E Tests
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches:
+      - main
+      - master
   pull_request:
-    branches: [ "main", "master" ]
+    branches:
+      - main
+      - master
 
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Clonar el repositorio
-      uses: actions/checkout@v4
+      - name: Clonar el repositorio
+        uses: actions/checkout@v4
 
-    - name: Configurar Java 21
-      uses: actions/setup-java@v4
-      with:
-        java-version: '21'
-        distribution: 'temurin'
-        cache: maven
+      - name: Configurar Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
 
-   - name: Descargar navegadores de Playwright
-      run: mvn org.codehaus.mojo:exec-maven-plugin:3.1.0:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps" -Dexec.classpathScope=test
+      - name: Descargar navegadores de Playwright
+        run: mvn org.codehaus.mojo:exec-maven-plugin:3.1.0:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps" -Dexec.classpathScope=test
 
-    - name: Ejecutar Pruebas E2E
-      run: mvn test
+      - name: Ejecutar Pruebas E2E
+        run: mvn test
